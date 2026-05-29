@@ -307,18 +307,56 @@
     }
     .pill:hover { border-color: var(--accent); color: var(--accent); background: rgba(0,229,255,0.05); }
 
-    /* ── PROJECTS (empty state) ── */
+    /* ── PROJECTS ── */
     #projects { background: var(--bg2); }
-    .empty-state {
-      text-align: center;
-      padding: 4rem 2rem;
-      border: 1px dashed var(--border);
-      border-radius: 12px;
-      color: var(--muted);
+    .project-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+    .project-card {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 0;
+      overflow: hidden;
+      transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+      display: flex; flex-direction: column;
     }
-    .empty-icon { font-size: 3rem; margin-bottom: 1rem; opacity: 0.4; }
-    .empty-text { font-size: 0.9rem; }
-    .empty-text span { color: var(--accent); }
+    .project-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-4px);
+      box-shadow: 0 8px 30px rgba(0,229,255,0.1);
+    }
+    .pc-top {
+      height: 4px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+    }
+    .pc-body { padding: 1.5rem; flex: 1; display: flex; flex-direction: column; }
+    .pc-icon { font-size: 2rem; margin-bottom: 0.8rem; }
+    .pc-title { font-size: 1rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem; }
+    .pc-desc { font-size: 0.8rem; color: var(--muted); line-height: 1.6; flex: 1; margin-bottom: 1rem; }
+    .pc-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1.2rem; }
+    .pc-tag {
+      font-size: 0.68rem;
+      padding: 0.2rem 0.6rem;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      font-family: var(--font-mono);
+      background: var(--bg);
+    }
+    .pc-link {
+      display: inline-flex; align-items: center; gap: 0.3rem;
+      font-size: 0.8rem;
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.2s;
+    }
+    .pc-link:hover { color: #33eeff; }
+    .pc-link::after { content: ' →'; transition: transform 0.2s; }
+    .pc-link:hover::after { transform: translateX(2px); }
+
+    @media (max-width: 768px) {
+      .project-cards { grid-template-columns: 1fr; }
+    }
 
     /* ── CONTACT ── */
     .contact-wrapper {
@@ -618,12 +656,51 @@
         <p class="section-subtitle">正在积累中，精彩项目敬请期待</p>
         <div class="line-deco"></div>
       </div>
-      <div class="empty-state fade-in">
-        <div class="empty-icon">🚀</div>
-        <p class="empty-text">项目建设中 &nbsp;·&nbsp; <span>Coming Soon</span></p>
-        <p style="margin-top:0.5rem;font-size:0.82rem;color:var(--muted);">后续会持续更新课程项目与实践作品，欢迎 Star 关注 👇</p>
-        <div style="margin-top:1.5rem;">
-          <a href="https://github.com/Czy129" target="_blank" class="btn btn-outline">⬡ 访问 GitHub 主页</a>
+      <div class="project-cards fade-in">
+        <!-- 项目1 -->
+        <div class="project-card">
+          <div class="pc-top"></div>
+          <div class="pc-body">
+            <div class="pc-icon">🖊️</div>
+            <div class="pc-title">手写汉字识别系统</div>
+            <div class="pc-desc">基于 CNN 卷积神经网络实现的中文手写汉字识别系统，支持常见 3755 个汉字，识别准确率达 96.8%。</div>
+            <div class="pc-tags">
+              <span class="pc-tag">PyTorch</span>
+              <span class="pc-tag">CNN</span>
+              <span class="pc-tag">Python</span>
+            </div>
+            <a href="project-hanzi.html" class="pc-link">查看详情</a>
+          </div>
+        </div>
+        <!-- 项目2 -->
+        <div class="project-card">
+          <div class="pc-top" style="background:linear-gradient(90deg,var(--accent2),var(--accent3));"></div>
+          <div class="pc-body">
+            <div class="pc-icon">💬</div>
+            <div class="pc-title">校园智能问答助手</div>
+            <div class="pc-desc">基于 RAG 和大语言模型的校园场景智能问答系统，覆盖选课咨询、校园导航等 12 个常见场景。</div>
+            <div class="pc-tags">
+              <span class="pc-tag">RAG</span>
+              <span class="pc-tag">LangChain</span>
+              <span class="pc-tag">Python</span>
+            </div>
+            <a href="project-qa.html" class="pc-link">查看详情</a>
+          </div>
+        </div>
+        <!-- 项目3 -->
+        <div class="project-card">
+          <div class="pc-top" style="background:linear-gradient(90deg,var(--accent3),var(--accent));"></div>
+          <div class="pc-body">
+            <div class="pc-icon">📚</div>
+            <div class="pc-title">图书推荐系统</div>
+            <div class="pc-desc">基于协同过滤算法的个性化图书推荐系统，支持基于用户和基于物品的混合推荐策略。</div>
+            <div class="pc-tags">
+              <span class="pc-tag">推荐算法</span>
+              <span class="pc-tag">Flask</span>
+              <span class="pc-tag">Python</span>
+            </div>
+            <a href="project-book.html" class="pc-link">查看详情</a>
+          </div>
         </div>
       </div>
     </div>
