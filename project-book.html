@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>图书推荐系统 | 车赵阳</title>
+  <style>
+    :root {
+      --bg: #0a0c10; --bg2: #0f1117; --bg3: #141820;
+      --border: #1e2535; --accent: #00e5ff; --accent2: #7c3aed; --accent3: #10b981;
+      --text: #e2e8f0; --muted: #64748b; --font-mono: 'Courier New', 'Consolas', monospace;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--bg); color: var(--text);
+      font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+      line-height: 1.8;
+    }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--accent2); border-radius: 3px; }
+
+    nav {
+      background: rgba(10,12,16,0.92); backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border); height: 60px;
+      display: flex; align-items: center; padding: 0 2rem; position: sticky; top: 0; z-index: 99;
+    }
+    .nav-back {
+      color: var(--accent); text-decoration: none; font-family: var(--font-mono); font-size: 0.85rem;
+      display: flex; align-items: center; gap: 0.5rem;
+    }
+    .nav-back:hover { color: #33eeff; }
+
+    .container { max-width: 860px; margin: 0 auto; padding: 3rem 2rem; }
+
+    .hero-bar {
+      height: 4px; background: linear-gradient(90deg, var(--accent3), var(--accent));
+      border-radius: 2px; margin-bottom: 2rem;
+    }
+    .project-icon { font-size: 3rem; margin-bottom: 0.5rem; }
+    .project-title { font-size: 2rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .project-subtitle { color: var(--muted); font-size: 1rem; margin-bottom: 1.5rem; }
+    .tag-row {
+      display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 2rem;
+      padding-bottom: 1.5rem; border-bottom: 1px solid var(--border);
+    }
+    .tt {
+      font-family: var(--font-mono); font-size: 0.7rem;
+      padding: 0.25rem 0.7rem; border-radius: 14px;
+      border: 1px solid var(--border); color: var(--muted); background: var(--bg3);
+    }
+
+    .section-title {
+      font-size: 1.2rem; font-weight: 700; color: var(--accent); margin: 2rem 0 1rem;
+      font-family: var(--font-mono);
+    }
+    .section-title::before { content: '// '; color: var(--muted); font-size: 0.8rem; }
+
+    p { color: var(--muted); font-size: 0.92rem; margin-bottom: 1rem; }
+    p strong { color: var(--text); }
+
+    ul, ol { padding-left: 1.5rem; margin-bottom: 1.5rem; }
+    li { color: var(--muted); font-size: 0.9rem; margin-bottom: 0.5rem; }
+    li strong { color: var(--text); }
+
+    .highlight-box {
+      background: var(--bg3); border: 1px solid var(--border); border-radius: 8px;
+      padding: 1.2rem 1.5rem; margin: 1.5rem 0;
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem;
+    }
+    .hb-item { text-align: center; }
+    .hb-num { font-family: var(--font-mono); font-size: 1.4rem; color: var(--accent3); font-weight: 700; }
+    .hb-label { font-size: 0.7rem; color: var(--muted); }
+
+    .code-block {
+      background: var(--bg3); border: 1px solid var(--border); border-radius: 6px;
+      padding: 1rem 1.2rem; margin: 1rem 0; overflow-x: auto;
+    }
+    .code-block pre {
+      font-family: var(--font-mono); font-size: 0.78rem; color: var(--accent3);
+      white-space: pre-wrap; line-height: 1.6;
+    }
+
+    .compare-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1.5rem 0;
+    }
+    .compare-card {
+      background: var(--bg3); border: 1px solid var(--border); border-radius: 8px; padding: 1.2rem;
+    }
+    .cc-title { font-size: 0.85rem; font-weight: 600; color: var(--accent2); margin-bottom: 0.5rem; }
+    .cc-list { font-size: 0.8rem; color: var(--muted); }
+    .cc-list div { padding: 0.3rem 0; border-bottom: 1px solid var(--border); }
+    .cc-list div:last-child { border-bottom: none; }
+    .cc-list span { color: var(--text); font-weight: 600; float: right; }
+
+    footer {
+      border-top: 1px solid var(--border); padding: 2rem;
+      text-align: center; font-size: 0.8rem; color: var(--muted);
+      font-family: var(--font-mono);
+    }
+    footer a { color: var(--accent); text-decoration: none; }
+
+    @media (max-width: 480px) {
+      .highlight-box { grid-template-columns: 1fr; }
+      .compare-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <a href="index.html#projects" class="nav-back">← 返回项目列表</a>
+  </nav>
+
+  <div class="container">
+    <div class="hero-bar"></div>
+    <div class="project-icon">📚</div>
+    <h1 class="project-title">图书推荐系统</h1>
+    <p class="project-subtitle">基于协同过滤算法的个性化图书推荐引擎</p>
+    <div class="tag-row">
+      <span class="tt">Python</span>
+      <span class="tt">Flask</span>
+      <span class="tt">Scikit-learn</span>
+      <span class="tt">NumPy</span>
+      <span class="tt">Pandas</span>
+      <span class="tt">SQLite</span>
+      <span class="tt">Bootstrap</span>
+    </div>
+
+    <div class="section-title">项目概述</div>
+    <p>
+      本项目是<strong>大二《Python 程序设计》</strong>课程的期末大作业。基于 <strong>协同过滤（Collaborative Filtering）</strong> 算法实现了一个个性化图书推荐系统。
+      用户可以注册并对已读图书进行评分，系统会根据评分数据自动推荐相似用户喜欢的书籍，以及和用户已评高分书籍相似的图书。
+    </p>
+
+    <div class="highlight-box">
+      <div class="hb-item">
+        <div class="hb-num">5000+</div>
+        <div class="hb-label">图书数据</div>
+      </div>
+      <div class="hb-item">
+        <div class="hb-num">RMSE 0.87</div>
+        <div class="hb-label">预测误差</div>
+      </div>
+      <div class="hb-item">
+        <div class="hb-num">Top-10</div>
+        <div class="hb-label">推荐列表命中率 78%</div>
+      </div>
+    </div>
+
+    <div class="section-title">算法设计</div>
+    <p>
+      系统采用<strong>混合推荐策略</strong>，结合了两种协同过滤方法，取长补短：
+    </p>
+    <div class="compare-grid">
+      <div class="compare-card">
+        <div class="cc-title">📊 基于用户的协同过滤（UserCF）</div>
+        <div class="cc-list">
+          <div>计算方式<span>余弦相似度</span></div>
+          <div>K 近邻<span>Top-30</span></div>
+          <div>适用场景<span>新用户冷启动</span></div>
+          <div>稀疏处理<span>均值填充</span></div>
+        </div>
+      </div>
+      <div class="compare-card">
+        <div class="cc-title">📖 基于物品的协同过滤（ItemCF）</div>
+        <div class="cc-list">
+          <div>计算方式<span>皮尔逊相关系数</span></div>
+          <div>K 近邻<span>Top-20</span></div>
+          <div>适用场景<span>新物品冷启动</span></div>
+          <div>稀疏处理<span>SVD 降维</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="code-block">
+      <pre># 混合推荐策略
+def hybrid_recommend(user_id, n=10):
+    # 1. UserCF：基于相似用户的评分预测
+    user_pred = user_based_cf(user_id, top_n=50)
+
+    # 2. ItemCF：基于相似物品的评分预测
+    item_pred = item_based_cf(user_id, top_n=50)
+
+    # 3. 加权融合（权重通过验证集网格搜索优化）
+    final_score = 0.45 * user_pred + 0.55 * item_pred
+
+    # 4. 去重 + 按预测分数排序取 Top-N
+    return sorted(final_score.items(), key=lambda x: x[1], reverse=True)[:n]</pre>
+    </div>
+
+    <div class="section-title">Web 应用功能</div>
+    <ol>
+      <li><strong>用户注册/登录：</strong>使用 Flask-Login 管理用户会话，密码经过 bcrypt 哈希加密存储。</li>
+      <li><strong>图书浏览与搜索：</strong>支持按书名、作者、分类进行模糊搜索，每本图书展示封面、简介和平均评分。</li>
+      <li><strong>评分系统：</strong>用户可对图书进行 1~5 星评分，评分后实时更新图书均分和用户画像。</li>
+      <li><strong>个性化推荐：</strong>首页展示 "为你推荐" 个性化列表，并标注推荐理由（"因为你看过《XXX》"或"和你有相似口味的读者也喜欢"）。</li>
+      <li><strong>热门榜单：</strong>基于全校用户评分数据生成的实时热门图书排行榜。</li>
+    </ol>
+
+    <div class="section-title">数据来源与处理</div>
+    <p>
+      图书元数据来自网络公开数据集 <strong>Goodreads Books Dataset</strong>，包含 5000+ 本中文和英文图书的标题、作者、分类、简介信息。
+      评分数据通过<strong>模拟生成</strong>（300 个虚拟用户 + 随机评分矩阵），以模拟真实系统的推荐场景。
+      在数据预处理阶段，过滤了评分次数少于 3 次的"冷门用户"和少于 5 次评分的"冷门图书"，有效降低了评分矩阵的稀疏度。
+    </p>
+
+    <div class="section-title">收获与总结</div>
+    <p>
+      通过本项目，我掌握了推荐系统的核心算法原理——<strong>协同过滤</strong>、<strong>矩阵分解</strong>（SVD）以及<strong>冷启动</strong>问题的应对策略。
+      也体会到在实际工程中，<strong>数据稀疏性</strong>是推荐系统的最大挑战之一——稀疏的用户-物品评分矩阵会严重影响相似度计算的可靠性。
+    </p>
+    <p>
+      后续优化方向：引入<strong>基于内容的推荐</strong>（Content-Based）作为冷启动补充，尝试使用 <strong>矩阵分解</strong>（Matrix Factorization）替代传统相似度计算，并升级至 <strong>深度协同过滤</strong>（Neural Collaborative Filtering）。
+    </p>
+
+    <div style="margin-top:3rem;padding-top:1.5rem;border-top:1px solid var(--border);">
+      <a href="index.html#projects" class="nav-back">← 返回项目列表</a>
+    </div>
+  </div>
+
+  <footer>
+    <span>© 2026 车赵阳 · Che Zhaoyang</span> &nbsp;|&nbsp;
+    <a href="https://github.com/Czy129">GitHub</a> &nbsp;|&nbsp;
+    <a href="index.html">返回主页</a>
+  </footer>
+</body>
+</html>
