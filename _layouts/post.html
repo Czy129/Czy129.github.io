@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  {% include head.html %}
+</head>
+<body>
+  {% include nav.html %}
+
+  <div class="container" style="max-width:800px;">
+    <div class="post-header">
+      <div class="post-date">{{ page.date | date: "%Y.%m.%d" }}</div>
+      <h1 style="font-size:2rem;color:var(--text);margin-bottom:0.5rem;">{{ page.title }}</h1>
+      {% if page.subtitle %}
+        <p style="color:var(--muted);font-size:1rem;">{{ page.subtitle }}</p>
+      {% endif %}
+    </div>
+    <div class="post-body">
+      {{ content }}
+    </div>
+    <div class="blog-nav">
+      <a href="/#blog">← 返回博客列表</a>
+    </div>
+  </div>
+
+  {% include footer.html %}
+</body>
+</html>
