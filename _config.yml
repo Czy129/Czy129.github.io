@@ -1,0 +1,48 @@
+# 车赵阳 个人主页 Jekyll 配置
+title: 车赵阳 | Che Zhaoyang
+email: czy129@github.io
+description: >-
+  云南大学智能科学与技术专业学生，AI 学习者和智能系统实践者。
+  关注人工智能、机器学习、智能系统的设计与实现。
+baseurl: ""
+url: "https://Czy129.github.io"
+github_username: Czy129
+
+# 构建设置
+markdown: kramdown
+permalink: /blog/:year/:month/:day/:title/
+
+# 导航
+nav:
+  - title: Home
+    url: /
+  - title: About
+    url: /#about
+  - title: Skills
+    url: /#skills
+  - title: Projects
+    url: /#projects
+  - title: Blog
+    url: /#blog
+  - title: Contact
+    url: /#contact
+
+# 集合
+collections:
+  projects:
+    output: true
+    permalink: /projects/:name/
+
+defaults:
+  - scope:
+      path: ""
+    values:
+      layout: default
+  - scope:
+      type: posts
+    values:
+      layout: post
+  - scope:
+      type: projects
+    values:
+      layout: project
